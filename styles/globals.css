@@ -1,0 +1,14 @@
+html,
+body {
+min-height: 100dvh;
+margin: 0;
+padding: 0;
+} 
+
+.content-wrapper{
+    padding: 1em;
+    padding-top: 2em;
+    justify-content: center;
+    align-content: center;
+    max-height: 100%;
+}

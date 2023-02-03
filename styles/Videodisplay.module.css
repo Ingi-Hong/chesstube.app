@@ -1,0 +1,21 @@
+.card{
+    max-width: 300px;
+    max-height: 400px;
+    font-size: small;
+    white-space: pre-wrap;
+    flex-wrap: wrap;
+}
+
+.space{
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+
+.space > *{
+    margin: 0.2em;
+}
+
+.tag {
+    color: black;
+}
