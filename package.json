@@ -10,7 +10,8 @@
     "antd": "^5.1.6",
     "next": "latest",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "sequelize": "^6.28.0"
   },
   "devDependencies": {
     "@types/node": "18.11.18",
