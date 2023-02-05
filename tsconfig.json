@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "pages/api/fetch_videos.js", "database/sequelize.js"  ],
   "exclude": [
     "node_modules"
   ]

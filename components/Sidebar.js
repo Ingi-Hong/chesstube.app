@@ -18,43 +18,44 @@ import {
 import styles from "../styles/Sidebar.module.css";
 const { Panel } = Collapse;
 
-// function getItem(label, key, icon, children, type) {
-//   return {
-//     key,
-//     icon,
-//     children,
-//     label,
-//     type,
-//   };
-// }
-
-// creators.map((creator) => getItem(creator, creator))
-const creators = ["Daniel Naroditsky", "Levy Rozman", "Eric Rosen", "All"];
-
 const handleClick = (info) => {
   console.log("click ", info);
 };
 
-function handleAll() {}
+function handleAll() {
+  console.log("All click")
+}
 
 const creatorClick = (creator) => {
-  if (creator.key === "All") {
-    handleAll();
-    console.log("All click");
-    return;
-  }
 
   console.log("Regular click: ");
   console.log(creator.key);
 };
 
 function dynamicCreators(input) {
-  return input.map((creator) => (
-    <Row>
-      {" "}
-      <Checkbox key={creator}>{creator}</Checkbox>
-    </Row>
-  ));
+  return (
+    <>
+      {input.map((creatorObject) => (
+        <Row>
+          <Checkbox
+            onClick={creatorClick}
+            item_id={creatorObject.creator_id}
+            key={creatorObject.creator_name}
+          >
+            {creatorObject.creator_name}
+          </Checkbox>
+        </Row>
+      ))}
+      <Row>
+        <Checkbox
+          onClick={handleAll}
+          key="All"
+        >
+          All
+        </Checkbox>
+      </Row>
+    </>
+  );
 }
 
 function SliderComponent(props) {
@@ -102,7 +103,11 @@ function SliderComponent(props) {
   );
 }
 
-const whatisthis = [{label: "Contribute", key: "contribute"}, {label: "Donate", key: "donate"}, { label: "What is this?", key: "what" }];
+const whatisthis = [
+  { label: "Contribute", key: "contribute" },
+  { label: "Donate", key: "donate" },
+  { label: "What is this?", key: "what" },
+];
 
 function Sidebar(props) {
   var setCreator = props.setCreator;
@@ -111,6 +116,8 @@ function Sidebar(props) {
   var max = props.max;
   var setMax = props.setMax;
   var setMin = props.setMin;
+  var opening_list = props.opening_list;
+  var creator_list = props.creator_list;
   const { token } = theme.useToken();
 
   const panelStyle = {
@@ -144,7 +151,7 @@ function Sidebar(props) {
           }
           key="creator"
         >
-          {dynamicCreators(creators)}
+          {dynamicCreators(creator_list)}
         </Panel>
 
         <Panel
@@ -206,7 +213,6 @@ function Sidebar(props) {
         items={whatisthis}
         selectable={false}
       />
-     
     </div>
   );
 }

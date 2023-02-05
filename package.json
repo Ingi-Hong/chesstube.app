@@ -9,6 +9,10 @@
     "@ant-design/icons": "^5.0.1",
     "antd": "^5.1.6",
     "next": "latest",
+    "noop2": "^2.0.0",
+    "pg": "^8.9.0",
+    "pg-hstore": "^2.3.4",
+    "pg-native": "^3.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sequelize": "^6.28.0"
