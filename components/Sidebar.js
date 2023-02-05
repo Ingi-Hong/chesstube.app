@@ -16,41 +16,24 @@ import {
   theme,
 } from "antd";
 import styles from "../styles/Sidebar.module.css";
+import {StatefulCreatorCheckbox} from "./StatefulCheckbox";
 const { Panel } = Collapse;
 
-const handleClick = (info) => {
-  console.log("click ", info);
-};
-
-function handleAll() {
-  console.log("All click")
-}
-
-const creatorClick = (creator) => {
-
-  console.log("Regular click: ");
-  console.log(creator.key);
-};
-
-function dynamicCreators(input) {
+function dynamicCreators(input, setCreator, creators) {
   return (
     <>
       {input.map((creatorObject) => (
         <Row>
-          <Checkbox
-            onClick={creatorClick}
+          <StatefulCreatorCheckbox
+            setStateList={setCreator}
+            stateList={creators}
+            label={creatorObject.creator_name}
             item_id={creatorObject.creator_id}
-            key={creatorObject.creator_name}
-          >
-            {creatorObject.creator_name}
-          </Checkbox>
+          />
         </Row>
       ))}
       <Row>
-        <Checkbox
-          onClick={handleAll}
-          key="All"
-        >
+        <Checkbox key="All">
           All
         </Checkbox>
       </Row>
@@ -110,12 +93,14 @@ const whatisthis = [
 ];
 
 function Sidebar(props) {
-  var setCreator = props.setCreator;
   var color = props.color;
   var min = props.min;
   var max = props.max;
   var setMax = props.setMax;
   var setMin = props.setMin;
+  var setCreators = props.setCreators;
+  var creators = props.creators;
+  var setOpenings = props.setOpening;
   var opening_list = props.opening_list;
   var creator_list = props.creator_list;
   const { token } = theme.useToken();
@@ -151,7 +136,7 @@ function Sidebar(props) {
           }
           key="creator"
         >
-          {dynamicCreators(creator_list)}
+          {dynamicCreators(creator_list, setCreators, creators)}
         </Panel>
 
         <Panel

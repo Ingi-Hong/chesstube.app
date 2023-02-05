@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Videodisplay from "../components/Videodisplay";
+import useSWR from 'swr';
 
-export default function Home() {
+export default function Home(props) {
 
   // Dummy data for videodisplay.js
   //title
@@ -9,6 +10,30 @@ export default function Home() {
   //isWhite
   //creator
   //thumbnail
+
+  const creatorList = props.creatorList;
+  const elomin = props.elomin;
+  const elomax = props.elomax;
+  const plays_as = props.plays_as;
+  const openings = props.openingsList;
+
+  const filterObject = 
+  {
+    creators: creatorList, 
+    elomin: elomin,
+    elomax: elomax,
+    plays_as: plays_as,
+    openings: openings,
+  }
+
+  console.log(filterObject);
+
+  function fetch_vid_data(){
+    
+  };
+
+  const { data, error, isLoading } = useSWR('/')
+
 
   const dummyData = [
     {
@@ -212,8 +237,6 @@ export default function Home() {
       opening: "Caro-Kahn",
     },
   ];
-
-  const [creator, setCreator] = useState();
 
   return (
     <div style={{overflow: "scroll"}} className="content-wrapper" >

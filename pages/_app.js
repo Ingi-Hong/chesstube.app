@@ -7,10 +7,8 @@ import "../styles/globals.css";
 // import {get_openings, get_creators} from "../database/static-props"
 const { Header, Sider, Content } = Layout;
 
-export default function MyApp({ Component, pageProps, openings, creators }) {
-  console.log(creators); 
-  console.log(openings);
-  const [creator, setCreator] = useState();
+export default function MyApp({ Component, pageProps, labelOpenings, labelCreators }) {
+  const [creators, setCreators] = useState(labelCreators);
   const darkMode = {
     topbarBg: "#333652",
     sidebarBg: "#90adc6",
@@ -55,14 +53,15 @@ export default function MyApp({ Component, pageProps, openings, creators }) {
         <Layout>
           <Sider>
             <Sidebar
-              setCreator={setCreator}
+              setCreators={setCreators}
+              creators={creators}
               color={sidebarBg}
               setMax={setMax}
               setMin={setMin}
               min={min}
               max={max}
-              creator_list={creators}
-              opening_list={openings}
+              creator_list={labelCreators}
+              opening_list={labelOpenings}
             />
           </Sider>
           <Content>
@@ -83,12 +82,12 @@ MyApp.getInitialProps = async (context) => {
     const { get_openings, get_creators } = await import(
       "../database/static-props"
     );
-    const openings = await get_openings();
-    const creators = await get_creators();
+    const labelOpenings = await get_openings();
+    const labelCreators = await get_creators();
     return {
       ...appProps,
-      openings,
-      creators,
+      labelOpenings: labelOpenings,
+      labelCreators: labelCreators,
     };
   } else {
     // Handle client-side here
@@ -97,8 +96,8 @@ MyApp.getInitialProps = async (context) => {
     fetch('/api/fetch_start_data')
     .then((res) => res.json())
     .then((data) => {
-      openings = data.openings;
-      creators = data.creators;
+      labelOpenings = data.openings;
+      labelCreators = data.creators;
     })
 
     return {

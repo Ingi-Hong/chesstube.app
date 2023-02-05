@@ -1,31 +1,25 @@
 import { Checkbox } from "antd";
 import { useState } from "react";
 
-function StatefulCheckbox(props){
-    const stateList = props.list;
-    const setStateList = props.setList;
+export function StatefulCreatorCheckbox(props){
+    const stateList = props.stateList;
+    const setStateList = props.setStateList;
     const label = props.label;
+    const item_id = props.item_id;
     const [checked, setChecked] = useState(true);
     
-    function handleChange(){
-
-    }
-
     function addTick(){
-
+        console.log(stateList)
+        setStateList([...stateList, {creator_id: item_id, creator_name: label}])
+        setChecked(true);
     }
 
     function removeTick(){
-
-    }
-
-    function handleRemove(id){
-        setStateList(list.filter((listItem) => listItem.item_id !== id))
+        setStateList(stateList.filter((listItem) => listItem.creator_id !== item_id));
+        setChecked(false);
     }
 
     return(
-        <Checkbox checked={checked}>{label}</Checkbox>
+        <Checkbox onChange={checked ? removeTick : addTick} defaultChecked={true} checked={checked}>{label}</Checkbox>
     )
-
-
 }
