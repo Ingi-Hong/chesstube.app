@@ -16,15 +16,15 @@ import {
   theme,
 } from "antd";
 import styles from "../styles/Sidebar.module.css";
-import {StatefulCreatorCheckbox} from "./StatefulCheckbox";
+import { CreatorCheckbox, OpeningCheckbox } from "./StatefulCheckbox";
 const { Panel } = Collapse;
 
-function dynamicCreators(input, setCreator, creators) {
+function parseCreatorList(input, setCreator, creators) {
   return (
     <>
       {input.map((creatorObject) => (
         <Row>
-          <StatefulCreatorCheckbox
+          <CreatorCheckbox
             setStateList={setCreator}
             stateList={creators}
             label={creatorObject.creator_name}
@@ -33,12 +33,15 @@ function dynamicCreators(input, setCreator, creators) {
         </Row>
       ))}
       <Row>
-        <Checkbox key="All">
-          All
-        </Checkbox>
+        <Checkbox key="All">All</Checkbox>
       </Row>
     </>
   );
+}
+
+function parseOpeningTree(openingTree, setOpenings, openings) {
+  console.log("set openings", setOpenings)
+  return <OpeningCheckbox openingTree={openingTree} setOpenings={setOpenings} />;
 }
 
 function SliderComponent(props) {
@@ -100,8 +103,9 @@ function Sidebar(props) {
   var setMin = props.setMin;
   var setCreators = props.setCreators;
   var creators = props.creators;
-  var setOpenings = props.setOpening;
-  var opening_list = props.opening_list;
+  var setOpenings = props.setOpenings;
+  var openings = props.openings;
+  var openingTree = props.opening_list;
   var creator_list = props.creator_list;
   const { token } = theme.useToken();
 
@@ -136,7 +140,7 @@ function Sidebar(props) {
           }
           key="creator"
         >
-          {dynamicCreators(creator_list, setCreators, creators)}
+          {parseCreatorList(creator_list, setCreators, creators)}
         </Panel>
 
         <Panel
@@ -188,7 +192,9 @@ function Sidebar(props) {
               <ShareAltOutlined /> Openings
             </Space>
           }
-        ></Panel>
+        >
+          {parseOpeningTree(openingTree, setOpenings, openings)}
+        </Panel>
       </Collapse>
       <Menu
         className={styles.additionalInfoLink}

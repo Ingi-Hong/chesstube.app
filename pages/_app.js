@@ -7,8 +7,24 @@ import "../styles/globals.css";
 // import {get_openings, get_creators} from "../database/static-props"
 const { Header, Sider, Content } = Layout;
 
-export default function MyApp({ Component, pageProps, labelOpenings, labelCreators }) {
+export default function MyApp({
+  Component,
+  pageProps,
+  labelOpenings,
+  labelCreators,
+}) {
   const [creators, setCreators] = useState(labelCreators);
+  var allOpenings = [];
+
+  for (const key in labelOpenings) {
+    console.log(key);
+    allOpenings.push(parseInt(key));
+  }
+  const [openings, setOpenings] = useState(allOpenings);
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(3000);
+  const [plays_as, setPlays_as] = useState("A");
+
   const darkMode = {
     topbarBg: "#333652",
     sidebarBg: "#90adc6",
@@ -32,9 +48,6 @@ export default function MyApp({ Component, pageProps, labelOpenings, labelCreato
   const [topbarBg, setTopbarBg] = useState(colorMode.topbarBg);
   const [topbarText, setTopbarText] = useState(colorMode.topbarText);
 
-  const [min, setMin] = useState(0);
-  const [max, setMax] = useState(3000);
-
   return (
     <ConfigProvider
       theme={{
@@ -55,6 +68,8 @@ export default function MyApp({ Component, pageProps, labelOpenings, labelCreato
             <Sidebar
               setCreators={setCreators}
               creators={creators}
+              setOpenings={setOpenings}
+              openings={openings}
               color={sidebarBg}
               setMax={setMax}
               setMin={setMin}
@@ -65,7 +80,14 @@ export default function MyApp({ Component, pageProps, labelOpenings, labelCreato
             />
           </Sider>
           <Content>
-            <Component {...pageProps} />
+            <Component
+              {...pageProps}
+              creatorList={creators}
+              elomin={min}
+              elomax={max}
+              plays_as={plays_as}
+              openingsList={openings}
+            />
           </Content>
         </Layout>
       </Layout>
@@ -84,6 +106,7 @@ MyApp.getInitialProps = async (context) => {
     );
     const labelOpenings = await get_openings();
     const labelCreators = await get_creators();
+    console.log();
     return {
       ...appProps,
       labelOpenings: labelOpenings,
@@ -93,12 +116,12 @@ MyApp.getInitialProps = async (context) => {
     // Handle client-side here
     var openings;
     var creators;
-    fetch('/api/fetch_start_data')
-    .then((res) => res.json())
-    .then((data) => {
-      labelOpenings = data.openings;
-      labelCreators = data.creators;
-    })
+    fetch("/api/fetch_start_data")
+      .then((res) => res.json())
+      .then((data) => {
+        labelOpenings = data.openings;
+        labelCreators = data.creators;
+      });
 
     return {
       ...appProps,

@@ -4,7 +4,32 @@ export async function get_openings() {
   const openings = await db_manager.openings.findAll({
     raw: true,
   });
-  return openings;
+
+  var opening_tree = {};
+  var children = [];
+
+  openings.forEach((item) => {
+    if (item.parent_id === null) {
+      opening_tree[item.opening_id] = { opening: item.opening, children: [] };
+    } else {
+      children.push({
+        opening_id: item.opening_id,
+        opening: item.opening,
+        parent_id: item.parent_id,
+      });
+    }
+  });
+
+  children.forEach((item) => {
+    var target_id = item.parent_id;
+    opening_tree[target_id].children.push({
+      opening_id: item.opening_id,
+      opening: item.opening,
+      parent_id: item.parent_id,
+    });
+  });
+
+  return opening_tree;
 }
 
 export async function get_creators() {

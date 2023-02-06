@@ -11,12 +11,16 @@ export default function Home(props) {
   //creator
   //thumbnail
 
-  const creatorList = props.creatorList;
+  const creatorObjectList = props.creatorList;
+  var creatorList = [];
+  creatorObjectList.forEach((item) => {
+    creatorList.push(item.creator_id);
+  })
   const elomin = props.elomin;
   const elomax = props.elomax;
   const plays_as = props.plays_as;
   const openings = props.openingsList;
-
+  console.log("openings", openings)
   const filterObject = 
   {
     creators: creatorList, 
