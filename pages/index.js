@@ -19,7 +19,6 @@ const fetch_vid_data = async (url, filterObject) => {
 };
 
 export default function Home(props) {
-
   const creatorObjectList = props.creatorList;
   var creatorList = [];
   creatorObjectList.forEach((item) => {
@@ -34,7 +33,7 @@ export default function Home(props) {
   const max = useDebounce(elomax, 400);
   const filteredColors = useDebounce(plays_as, 400);
   if (filteredColors) {
-    plays_as = filteredColors[0]
+    plays_as = filteredColors[0];
   }
   if (min) {
     elomin = min[0];
@@ -56,16 +55,31 @@ export default function Home(props) {
   );
 
   if (error) {
-    return <div style={{height: '100%', justifyContent: 'center', alignContent: 'center'}}>{error.message}</div>;
+    return (
+      <div
+        style={{
+          height: "100%",
+          justifyContent: "center",
+          alignContent: "center",
+        }}
+      >
+        {error.message}
+      </div>
+    );
   }
 
-  if (data === undefined) {
-    return <Spin delay={500} spinning={true}></Spin>
+  if (isLoading){
+    return <Spin spinning={true} />
   }
 
   return (
     <div style={{ overflow: "scroll" }} className="content-wrapper">
-      <Videodisplay isLoading={isLoading} results={data.Videos} creatorMap={creatorMap} />
+          <Videodisplay
+            key="videodisplay"
+            isLoading={isLoading}
+            results={data.Videos}
+            creatorMap={creatorMap}
+          />
     </div>
   );
 }

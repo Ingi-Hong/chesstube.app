@@ -12,7 +12,6 @@ export default async function fetch_videos(req, res) {
     return url[2] !== undefined ? url[2].split(/[^0-9a-z_\-]/i)[0] : url[0];
   }
 
-  //   {creators: [], elomin: [int], elomax: [int], plays_as: [A | B | W], openings: []}
   const creators = req.body.creators;
   const elomin = req.body.elomin;
   const elomax = req.body.elomax;
@@ -71,16 +70,6 @@ export default async function fetch_videos(req, res) {
       ] = `https://img.youtube.com/vi/${videoID}/maxresdefault.jpg`;
     }
 
-    // function (data) {
-    // var title = data.items[0].snippet.title;
-    //   item["title"] = title;
-    // });
-
-    // item[
-    //   "thumbnail"
-    // ] = `https://img.youtube.com/vi/${videoID}/maxresdefault.jpg`;
-
-    console.log("videos", videos);
     res.status(200).json({ Videos: videos });
   } catch (err) {
     console.log("500 error", err);

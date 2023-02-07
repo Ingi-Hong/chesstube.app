@@ -6,14 +6,17 @@ import {
   UserOutlined
 } from "@ant-design/icons";
 import {
-  Checkbox, Col, Collapse,
-  InputNumber,
-  Menu,
-  Row, Space,
-  theme
+  Col,
+  Collapse,
+  InputNumber, Popover, Row,
+  Space,
+  theme,
+  Typography
 } from "antd";
-import styles from "../styles/Sidebar.module.css";
-import { CreatorCheckbox, OpeningCheckbox, ColorCheckbox } from "./StatefulCheckbox";
+import {
+  ColorCheckbox, CreatorCheckbox,
+  OpeningCheckbox
+} from "./StatefulCheckbox";
 
 const { Panel } = Collapse;
 
@@ -47,7 +50,7 @@ function SliderComponent(props) {
   var max = props.max;
 
   const minChange = (value) => {
-    console.log("value", value)
+    console.log("value", value);
     setMin(value);
   };
 
@@ -85,10 +88,13 @@ function SliderComponent(props) {
   );
 }
 
+const content = <div>Coming soon...</div>
+
+
 const whatisthis = [
-  { label: "Contribute", key: "contribute" },
-  { label: "Donate", key: "donate" },
-  { label: "What is this?", key: "what" },
+  { label: "Contribute", key: "contribute", content: content },
+  { label: "Donate", key: "donate", content: content },
+  { label: "What is this?", key: "what", content: content },
 ];
 
 function Sidebar(props) {
@@ -173,11 +179,19 @@ function Sidebar(props) {
         >
           <Row>
             {" "}
-            <ColorCheckbox colors={colors} color={'white'} setColors={setColors}/>
+            <ColorCheckbox
+              colors={colors}
+              color={"white"}
+              setColors={setColors}
+            />
           </Row>
           <Row>
             {" "}
-            <ColorCheckbox colors={colors} color={'black'} setColors={setColors} />
+            <ColorCheckbox
+              colors={colors}
+              color={"black"}
+              setColors={setColors}
+            />
           </Row>
         </Panel>
 
@@ -193,14 +207,14 @@ function Sidebar(props) {
           {parseOpeningTree(openingTree, setOpenings, openings)}
         </Panel>
       </Collapse>
-      <Menu
-        className={styles.additionalInfoLink}
-        theme={{ algorithm: theme.compactAlgorithm }}
-        style={{ position: "absolute", bottom: "0px" }}
-        mode="inline"
-        items={whatisthis}
-        selectable={false}
-      />
+      <div style={{height: '100%'}} />
+      <div style={{width: '100%', display: "flex", flexDirection: "column", justifyContent: 'center', alignContent: 'center' }}>
+        {whatisthis.map((item) => (
+          <Popover placement="right" key={item.key} content={item.content}>
+            <Typography.Link style={{color: 'black', padding: '0.5em'}} underline key={item.key}>{item.label}</Typography.Link>
+          </Popover>
+        ))}
+      </div>
     </div>
   );
 }
