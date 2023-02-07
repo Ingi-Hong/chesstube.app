@@ -33,8 +33,8 @@ export function CreatorCheckbox(props) {
 
 export function OpeningCheckbox({ openingTree, setOpenings }) {
   var treeData = [];
+  console.log(openingTree)
   for (const key in openingTree) {
-    console.log("openingTree", openingTree);
     var children = [];
     openingTree[key].children.forEach((element) => {
       children.push({ value: element.opening_id, title: element.opening });
@@ -47,9 +47,9 @@ export function OpeningCheckbox({ openingTree, setOpenings }) {
   }
 
   function handleChange(e) {
-    var idList = e.forEach((item) => parseInt(item));
+    var idList = [];
+    e.forEach((item) => idList.push(parseInt(item)));
     setOpenings(idList);
-    console.log("idList", idList);
   }
 
   return (
@@ -62,6 +62,36 @@ export function OpeningCheckbox({ openingTree, setOpenings }) {
       multiple={true}
       treeselect={TreeSelect.SHOW_PARENT}
       showSearch={false}
+      defaultValue={treeData}
     />
   );
+}
+
+export function ColorCheckbox({color, setColors, colors}){
+
+  const [checked, setChecked] = useState(true);
+  console.log('colors', colors)
+
+  function addTick(){
+    setColors([...colors, color]);
+    setChecked(true);
+  }
+
+  function removeTick(){
+    setColors(
+      colors.filter((listItem) => listItem !== color)
+    )
+    setChecked(false);
+  }
+
+  return(
+    <Checkbox
+    checked={checked}
+    defaultChecked={true}
+    onChange={checked ? removeTick : addTick}
+    >
+      {color === 'white' ? "White" : "Black"}
+    </Checkbox>
+  )
+
 }

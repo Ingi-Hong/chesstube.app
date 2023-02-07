@@ -1,9 +1,24 @@
 import React, { useState } from "react";
 import Videodisplay from "../components/Videodisplay";
-import useSWR from 'swr';
+import useSWR from "swr";
+import { useDebounce } from "use-debounce";
+import { Spin } from "antd";
+
+const fetch_vid_data = async (url, filterObject) => {
+  const response = await fetch(url, {
+    method: "POST",
+    body: JSON.stringify(filterObject),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  var responseBody = response.json();
+  console.log(responseBody);
+  return responseBody;
+};
 
 export default function Home(props) {
-
   // Dummy data for videodisplay.js
   //title
   //elo
@@ -15,236 +30,48 @@ export default function Home(props) {
   var creatorList = [];
   creatorObjectList.forEach((item) => {
     creatorList.push(item.creator_id);
-  })
-  const elomin = props.elomin;
-  const elomax = props.elomax;
-  const plays_as = props.plays_as;
+  });
+  var elomin = props.elomin;
+  var elomax = props.elomax;
+  var plays_as = props.plays_as;
   const openings = props.openingsList;
-  console.log("openings", openings)
-  const filterObject = 
-  {
-    creators: creatorList, 
+  const creatorMap = props.labelCreators;
+  const min = useDebounce(elomin, 400);
+  const max = useDebounce(elomax, 400);
+  const filteredColors = useDebounce(plays_as, 400);
+  if (filteredColors) {
+    plays_as = filteredColors[0]
+  }
+  if (min) {
+    elomin = min[0];
+  }
+  if (max) {
+    elomax = max[0];
+  }
+  const filterObject = {
+    creators: creatorList,
     elomin: elomin,
     elomax: elomax,
     plays_as: plays_as,
     openings: openings,
-  }
-
-  console.log(filterObject);
-
-  function fetch_vid_data(){
-    
   };
 
-  const { data, error, isLoading } = useSWR('/')
+  const { data, error, isLoading } = useSWR(
+    ["/api/fetch_videos", filterObject],
+    ([url, filterObject]) => fetch_vid_data(url, filterObject)
+  );
 
+  if (error) {
+    return <div style={{height: '100%', justifyContent: 'center', alignContent: 'center'}}>{error.message}</div>;
+  }
 
-  const dummyData = [
-    {
-      title: "peee peee pee pepepepofaodfj poo poo",
-      elo: 1268,
-      isWhite: true,
-      creator: "Daniel Naroditsky",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Four Knights Scotch",
-    },
-    {
-      title: "Example Two",
-      elo: 2300,
-      isWhite: false,
-      creator: "Levy Rossman",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Caro-Kahn",
-    },
-    {
-      title: "Example Three",
-      elo: 1268,
-      isWhite: true,
-      creator: "Daniel Naroditsky",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Four Knights Scotch",
-    },
-    {
-      title: "Example Four",
-      elo: 2300,
-      isWhite: false,
-      creator: "Levy Rossman",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Caro-Kahn",
-    },
-    {
-      title: "Example Five",
-      elo: 1268,
-      isWhite: true,
-      creator: "Daniel Naroditsky",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Four Knights Scotch",
-    },
-    {
-      title: "Example Six",
-      elo: 2300,
-      isWhite: false,
-      creator: "Levy Rossman",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Caro-Kahn",
-    },
-    {
-      title: "Example Seven",
-      elo: 1268,
-      isWhite: true,
-      creator: "Daniel Naroditsky",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Four Knights Scotch",
-    },
-    {
-      title: "Example Eight",
-      elo: 2300,
-      isWhite: false,
-      creator: "Levy Rossman",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Caro-Kahn",
-    },
-    {
-      title: "Example one",
-      elo: 1268,
-      isWhite: true,
-      creator: "Daniel Naroditsky",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Four Knights Scotch",
-    },
-    {
-      title: "Example Two",
-      elo: 2300,
-      isWhite: false,
-      creator: "Levy Rossman",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Caro-Kahn",
-    },
-    {
-      title: "Example Three",
-      elo: 1268,
-      isWhite: true,
-      creator: "Daniel Naroditsky",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Four Knights Scotch",
-    },
-    {
-      title: "Example Four",
-      elo: 2300,
-      isWhite: false,
-      creator: "Levy Rossman",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Caro-Kahn",
-    },
-    {
-      title: "Example Five",
-      elo: 1268,
-      isWhite: true,
-      creator: "Daniel Naroditsky",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Four Knights Scotch",
-    },
-    {
-      title: "Example Six",
-      elo: 2300,
-      isWhite: false,
-      creator: "Levy Rossman",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Caro-Kahn",
-    },
-    {
-      title: "Example Seven",
-      elo: 1268,
-      isWhite: true,
-      creator: "Daniel Naroditsky",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Four Knights Scotch",
-    },
-    {
-      title: "Example Eight",
-      elo: 2300,
-      isWhite: false,
-      creator: "Levy Rossman",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Caro-Kahn",
-    },
-    {
-      title: "Example one",
-      elo: 1268,
-      isWhite: true,
-      creator: "Daniel Naroditsky",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Four Knights Scotch",
-    },
-    {
-      title: "Example Two",
-      elo: 2300,
-      isWhite: false,
-      creator: "Levy Rossman",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Caro-Kahn",
-    },
-    {
-      title: "Example Three",
-      elo: 1268,
-      isWhite: true,
-      creator: "Daniel Naroditsky",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Four Knights Scotch",
-    },
-    {
-      title: "Example Four",
-      elo: 2300,
-      isWhite: false,
-      creator: "Levy Rossman",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Caro-Kahn",
-    },
-    {
-      title: "Example Five",
-      elo: 1268,
-      isWhite: true,
-      creator: "Daniel Naroditsky",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Four Knights Scotch",
-    },
-    {
-      title: "Example Six",
-      elo: 2300,
-      isWhite: false,
-      creator: "Levy Rossman",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Caro-Kahn",
-    },
-    {
-      title: "Example Seven",
-      elo: 1268,
-      isWhite: true,
-      creator: "Daniel Naroditsky",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Four Knights Scotch",
-    },
-    {
-      title: "Example Eight",
-      elo: 2300,
-      isWhite: false,
-      creator: "Levy Rossman",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Caro-Kahn",
-    },
-    {
-      title: "Example Eight",
-      elo: 2300,
-      isWhite: false,
-      creator: "Levy Rossman",
-      thumbnail: "https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg",
-      opening: "Caro-Kahn",
-    },
-  ];
+  if (data === undefined) {
+    return <Spin delay={500} spinning={true}></Spin>
+  }
 
   return (
-    <div style={{overflow: "scroll"}} className="content-wrapper" >
-      <Videodisplay results={dummyData} />
+    <div style={{ overflow: "scroll" }} className="content-wrapper">
+      <Videodisplay isLoading={isLoading} results={data.Videos} creatorMap={creatorMap} />
     </div>
   );
 }

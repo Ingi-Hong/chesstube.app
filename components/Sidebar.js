@@ -3,20 +3,18 @@ import {
   PlayCircleOutlined,
   ShareAltOutlined,
   UpOutlined,
-  UserOutlined,
+  UserOutlined
 } from "@ant-design/icons";
 import {
-  Checkbox,
-  Collapse,
+  Checkbox, Col, Collapse,
   InputNumber,
   Menu,
-  Row,
-  Col,
-  Space,
-  theme,
+  Row, Space,
+  theme
 } from "antd";
 import styles from "../styles/Sidebar.module.css";
-import { CreatorCheckbox, OpeningCheckbox } from "./StatefulCheckbox";
+import { CreatorCheckbox, OpeningCheckbox, ColorCheckbox } from "./StatefulCheckbox";
+
 const { Panel } = Collapse;
 
 function parseCreatorList(input, setCreator, creators) {
@@ -32,16 +30,14 @@ function parseCreatorList(input, setCreator, creators) {
           />
         </Row>
       ))}
-      <Row>
-        <Checkbox key="All">All</Checkbox>
-      </Row>
     </>
   );
 }
 
 function parseOpeningTree(openingTree, setOpenings, openings) {
-  console.log("set openings", setOpenings)
-  return <OpeningCheckbox openingTree={openingTree} setOpenings={setOpenings} />;
+  return (
+    <OpeningCheckbox openingTree={openingTree} setOpenings={setOpenings} />
+  );
 }
 
 function SliderComponent(props) {
@@ -51,6 +47,7 @@ function SliderComponent(props) {
   var max = props.max;
 
   const minChange = (value) => {
+    console.log("value", value)
     setMin(value);
   };
 
@@ -72,7 +69,6 @@ function SliderComponent(props) {
             controls={false}
           ></InputNumber>
         </Col>
-
         <Col span={12}>Max: </Col>
         <Col span={12}>
           <InputNumber
@@ -107,6 +103,11 @@ function Sidebar(props) {
   var openings = props.openings;
   var openingTree = props.opening_list;
   var creator_list = props.creator_list;
+  var creators = props.creators;
+  var setCreators = props.setCreators;
+  var colors = props.colors;
+  var setColors = props.setColors;
+
   const { token } = theme.useToken();
 
   const panelStyle = {
@@ -172,15 +173,11 @@ function Sidebar(props) {
         >
           <Row>
             {" "}
-            <Checkbox key="white">White</Checkbox>
+            <ColorCheckbox colors={colors} color={'white'} setColors={setColors}/>
           </Row>
           <Row>
             {" "}
-            <Checkbox key="black">Black</Checkbox>
-          </Row>
-          <Row>
-            {" "}
-            <Checkbox key="allcolors">All</Checkbox>
+            <ColorCheckbox colors={colors} color={'black'} setColors={setColors} />
           </Row>
         </Panel>
 

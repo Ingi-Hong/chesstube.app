@@ -1,46 +1,86 @@
-import { Card, Col, Row, Space, Tag } from "antd";
+import { Card, Col, Row, Space, Tag, Spin } from "antd";
 import styles from "../styles/Videodisplay.module.css";
+import { motion, AnimatePresence } from "framer-motion";
 const { Meta } = Card;
 
 function Videodisplay(props) {
   var toDisplay = props.results;
-  var columns = props.columns;
-  var rows = props.rows;
+  var isLoading = props.isLoading;
+
+  if (toDisplay === undefined) {
+    return <div>Error: Undefined passed</div>;
+  }
 
   return (
     <div>
-
-    <Row gutter={[25, 15]} justify="center">
-      {toDisplay.map((card, iteration) => (
-        <Col key={"col" + iteration}>
-          <Card
-            className={styles.card}
-            key={"card" + iteration}
-            cover=
-            {
-              <img
-                className={styles.thumbnail}
-                alt="example"
-                src="https://i.ytimg.com/vi/C6RUp21s6BQ/maxresdefault.jpg"
-              />
-            }
-            hoverable
-          >
-            <Meta
-              key={"meta" + iteration}
-              title={card.title} 
-            />
-            <div>by {card.creator}</div>
-            <div style={{height: '1em'}}></div>
-            <div className={styles.space}>
-              <Tag className={styles.tag} style={{color: "black"}} color="#efe7bc">{card.elo} Rating</Tag>
-              <Tag className={styles.tag} style={{color: "black"}} color="#ffa384">{card.opening}</Tag>
-              <Tag className={styles.tag} style={{color: "black"}} color="#90adc6">{card.isWhite ? "Plays as white" : "Plays as black"}</Tag>
-            </div>
-          </Card>
-        </Col>
-      ))}
-    </Row>
+      <Spin spinning={isLoading}>
+        <div
+          style={{
+            flexWrap: "wrap",
+            display: "flex",
+            flexDirection: "row",
+            gap: "2em",
+            margin: "1em",
+          }}
+        >
+          <AnimatePresence initial={true}>
+            {toDisplay.map((card, iteration) => (
+              <motion.div
+                key={"motion" + iteration}
+                animate={{ x: 0, y: 0 }}
+                exit={{ opacity: 0 }}
+                whileHover={{
+                  scale: 1.01,
+                  transition: { duration: 0.03 },
+                }}
+              >
+                <Card
+                  hoverable={true}
+                  className={styles.card}
+                  key={"card" + iteration}
+                  cover={
+                    <img
+                      className={styles.thumbnail}
+                      alt="example"
+                      src={card.thumbnail}
+                      style={{ border: 0, frameborder: 0 }}
+                    />
+                  }
+                >
+                  <Meta key={"meta" + iteration} title={card.title} />
+                  <div>by {card["Creator.creator_name"]}</div>
+                  <div style={{ height: "1em" }}></div>
+                  <div className={styles.space}>
+                    <Tag
+                      className={styles.tag}
+                      style={{ color: "black" }}
+                      color="#efe7bc"
+                    >
+                      {card.elo} Rating
+                    </Tag>
+                    <Tag
+                      className={styles.tag}
+                      style={{ color: "black" }}
+                      color="#ffa384"
+                    >
+                      {card["Opening.opening"]}
+                    </Tag>
+                    <Tag
+                      className={styles.tag}
+                      style={{ color: "black" }}
+                      color="#90adc6"
+                    >
+                      {card.plays_as == "white"
+                        ? "Plays as white"
+                        : "Plays as black"}
+                    </Tag>
+                  </div>
+                </Card>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+      </Spin>
     </div>
   );
 }

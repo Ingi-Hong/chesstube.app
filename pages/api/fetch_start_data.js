@@ -36,8 +36,8 @@ export default async function fetch_start_data(req, res) {
         parent_id: item.parent_id,
       });
     });
-
-    res.status(200).json({ openings: opening_tree, creators: creators });
+    
+    res.status(200).json({ allOpenings: openings, opening_tree: opening_tree, creators: creators });
   } catch (err) {
     res.status(500).json({ error: "error fetching data from db.", err });
   }

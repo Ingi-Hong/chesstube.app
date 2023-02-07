@@ -70,14 +70,40 @@ class Database {
           primaryKey: true,
         },
 
-        creator_id: DataTypes.INTEGER,
-        opening_id: DataTypes.INTEGER,
+        creator_id: {
+          type: DataTypes.INTEGER,
+          references: {
+            model: this.creators,
+            key: 'creator_id',
+          }
+        },
+        opening_id: {
+          type: DataTypes.INTEGER,
+          references: {
+            model: this.openings,
+            key: 'opening_id',
+          }
+        },
         elo: DataTypes.INTEGER,
         plays_as: DataTypes.STRING,
         video_link: DataTypes.STRING,
       },
       { timestamps: false }
     );
+
+
+    this.openings.hasMany(this.videos,{
+      foreignKey: 'opening_id'
+    }) 
+    this.creators.hasMany(this.videos, {
+      foreignKey: 'creator_id'
+    }) 
+    this.videos.belongsTo(this.openings, {
+      foreignKey: 'opening_id'
+    })
+    this.videos.belongsTo(this.creators, {
+      foreignKey: 'creator_id'
+    })
   }
 
   async checkIfActive() {

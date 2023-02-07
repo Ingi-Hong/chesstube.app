@@ -1,6 +1,7 @@
 import { db_manager } from "./sequelize.js";
 
 export async function get_openings() {
+
   const openings = await db_manager.openings.findAll({
     raw: true,
   });
@@ -29,7 +30,7 @@ export async function get_openings() {
     });
   });
 
-  return opening_tree;
+  return {opening_tree: opening_tree, openingList: openings};
 }
 
 export async function get_creators() {

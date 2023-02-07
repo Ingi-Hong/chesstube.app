@@ -1,30 +1,31 @@
 import { ConfigProvider, Layout } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import App from "next/app";
 import "../styles/globals.css";
+import useTimeout from "use-timeout";
 // import {get_openings, get_creators} from "../database/static-props"
 const { Header, Sider, Content } = Layout;
 
 export default function MyApp({
   Component,
   pageProps,
-  labelOpenings,
+  openingTreeAndList,
   labelCreators,
 }) {
-  const [creators, setCreators] = useState(labelCreators);
   var allOpenings = [];
-
-  for (const key in labelOpenings) {
-    console.log(key);
-    allOpenings.push(parseInt(key));
-  }
+  
+  openingTreeAndList.openingList.forEach((item) => 
+  allOpenings.push(parseInt(item.opening_id))
+  );
+  
+  const [creators, setCreators] = useState(labelCreators);
   const [openings, setOpenings] = useState(allOpenings);
+  const [plays_as, setPlays_as] = useState(["black", "white"]);
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(3000);
-  const [plays_as, setPlays_as] = useState("A");
-
+  
   const darkMode = {
     topbarBg: "#333652",
     sidebarBg: "#90adc6",
@@ -47,7 +48,7 @@ export default function MyApp({
   const [sidebarBg, setSidebarBg] = useState(colorMode.sidebarBg);
   const [topbarBg, setTopbarBg] = useState(colorMode.topbarBg);
   const [topbarText, setTopbarText] = useState(colorMode.topbarText);
-
+  
   return (
     <ConfigProvider
       theme={{
@@ -69,14 +70,16 @@ export default function MyApp({
               setCreators={setCreators}
               creators={creators}
               setOpenings={setOpenings}
-              openings={openings}
+              openings={allOpenings}
               color={sidebarBg}
-              setMax={setMax}
-              setMin={setMin}
               min={min}
               max={max}
+              setMin={setMin}
+              setMax={setMax}
               creator_list={labelCreators}
-              opening_list={labelOpenings}
+              opening_list={openingTreeAndList.opening_tree}
+              setColors={setPlays_as}
+              colors={plays_as}
             />
           </Sider>
           <Content>
@@ -87,6 +90,7 @@ export default function MyApp({
               elomax={max}
               plays_as={plays_as}
               openingsList={openings}
+              creatorMap = {labelCreators}
             />
           </Content>
         </Layout>
@@ -106,10 +110,9 @@ MyApp.getInitialProps = async (context) => {
     );
     const labelOpenings = await get_openings();
     const labelCreators = await get_creators();
-    console.log();
     return {
       ...appProps,
-      labelOpenings: labelOpenings,
+      openingTreeAndList: labelOpenings,
       labelCreators: labelCreators,
     };
   } else {
