@@ -3,9 +3,18 @@ import styles from "../styles/Videodisplay.module.css";
 import { motion, AnimatePresence } from "framer-motion";
 const { Meta } = Card;
 
+
+
 function Videodisplay(props) {
+
+  const handleClick = (url) => {
+    window.open(url, '_blank').focus();
+  }
+
   var toDisplay = props.results;
   var isLoading = props.isLoading;
+
+  
 
   if (toDisplay === undefined) {
     return <div>Error: Undefined passed</div>;
@@ -34,6 +43,7 @@ function Videodisplay(props) {
                   transition: { duration: 0.03 },
                 }}
               >
+                {console.log('card', card['title'])}
                 <Card
                   hoverable={true}
                   className={styles.card}
@@ -46,6 +56,7 @@ function Videodisplay(props) {
                       style={{ border: 0, frameborder: 0 }}
                     />
                   }
+                  onClick={() => handleClick(card.video_link)}
                 >
                   <Meta key={"meta" + iteration} title={card.title} />
                   <div>by {card["Creator.creator_name"]}</div>

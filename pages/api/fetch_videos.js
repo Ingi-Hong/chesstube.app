@@ -19,7 +19,6 @@ export default async function fetch_videos(req, res) {
   const plays_as = req.body.plays_as;
   const openings = req.body.openings;
 
-
   try {
     const lazyLoad = async () => {
       const [retrievedVideos] = await Promise.all([
@@ -41,17 +40,46 @@ export default async function fetch_videos(req, res) {
         }),
       ]);
 
-      console.log("retreievedVideos", retrievedVideos);
-
-      retrievedVideos.forEach((item) => {
-        item["thumbnail"] = `https://img.youtube.com/vi/${YouTubeGetID(
-          item.video_link
-        )}/maxresdefault.jpg`;
-      });
-
       return retrievedVideos;
     };
+
     const videos = await lazyLoad();
+    const api_key = process.env.API_KEY;
+
+    const responses = await Promise.all(
+      videos.map(async (item) => {
+        var videoID = YouTubeGetID(item.video_link);
+
+        const response = await fetch(
+          "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" +
+            videoID +
+            "&key=" +
+            api_key
+        );
+
+        return response;
+      })
+    );
+
+    for (var i = 0; i < responses.length; i++) {
+      var videoID = YouTubeGetID(videos[i].video_link);
+      var responseBody = await responses[i].json();
+      var title = responseBody.items[0].snippet.title;
+      videos[i]["title"] = title;
+      videos[i][
+        "thumbnail"
+      ] = `https://img.youtube.com/vi/${videoID}/maxresdefault.jpg`;
+    }
+
+    // function (data) {
+    // var title = data.items[0].snippet.title;
+    //   item["title"] = title;
+    // });
+
+    // item[
+    //   "thumbnail"
+    // ] = `https://img.youtube.com/vi/${videoID}/maxresdefault.jpg`;
+
     console.log("videos", videos);
     res.status(200).json({ Videos: videos });
   } catch (err) {

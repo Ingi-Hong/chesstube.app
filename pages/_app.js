@@ -1,10 +1,9 @@
 import { ConfigProvider, Layout } from "antd";
-import { useEffect, useState } from "react";
+import App from "next/app";
+import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
-import App from "next/app";
 import "../styles/globals.css";
-import useTimeout from "use-timeout";
 // import {get_openings, get_creators} from "../database/static-props"
 const { Header, Sider, Content } = Layout;
 

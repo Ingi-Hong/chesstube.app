@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import Videodisplay from "../components/Videodisplay";
+import { Spin } from "antd";
+import React from "react";
 import useSWR from "swr";
 import { useDebounce } from "use-debounce";
-import { Spin } from "antd";
+import Videodisplay from "../components/Videodisplay";
 
 const fetch_vid_data = async (url, filterObject) => {
   const response = await fetch(url, {
@@ -19,12 +19,6 @@ const fetch_vid_data = async (url, filterObject) => {
 };
 
 export default function Home(props) {
-  // Dummy data for videodisplay.js
-  //title
-  //elo
-  //isWhite
-  //creator
-  //thumbnail
 
   const creatorObjectList = props.creatorList;
   var creatorList = [];
