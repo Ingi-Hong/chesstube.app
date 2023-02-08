@@ -1,6 +1,10 @@
-import { Card, Col, Row, Space, Tag, Spin, Empty, Typography } from "antd";
-import styles from "../styles/Videodisplay.module.css";
-import { motion, AnimatePresence } from "framer-motion";
+import { Card, Empty, Row, Typography } from "antd";
+import {
+  AnimatePresence,
+  AnimateSharedLayout,
+  LayoutGroup,
+  motion,
+} from "framer-motion";
 import Videocard from "./Videocard";
 
 const { Meta } = Card;
@@ -10,51 +14,48 @@ function Videodisplay(props) {
   var toDisplay;
   if (results === undefined) {
     toDisplay = [];
-  }else{
-    toDisplay = results.Videos; 
-  }
+  } else {
+    toDisplay = results.Videos;
 
-  {
     if (toDisplay.length == 0) {
       return (
         <motion.div
-        key='nothingToDisplay'
-        initial={{opacity: 0}}
-        exit={{opacity: 0}}
-        animate={{opacity: 1}}
+          key="nothingToDisplay"
+          initial={{ opacity: 0 }}
+          exit={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
         >
-
-        <Empty
-          image="/mac.jpg"
-          imageStyle={{
-            height: "70dvh",
-          }}
-          description={
-            <span>
-              <Typography.Title level={2}>
-                Your search didn't return any results!
-              </Typography.Title>
-            </span>
-          }
+          <Empty
+            image="/mac.jpg"
+            imageStyle={{
+              height: "70dvh",
+            }}
+            description={
+              <span>
+                <Typography.Title level={2}>
+                  Your search didn't return any results!
+                </Typography.Title>
+              </span>
+            }
           />
-          </motion.div>
+        </motion.div>
       );
     }
   }
 
   const DisplayThis = toDisplay.map((card, iteration) => (
-    <Videocard key={"videocard" + iteration} card={card} />
+    <Videocard layoutId={card.title} key={"videocard" + iteration} card={card} />
   ));
   return (
-    <motion.div key="motiondivOutter" exit={{ opacity: 0, y: "10%" }}>
-      <div key="wrappa">
-        <Row key={"rowID"} justify="space-evenly" gutter={[16, 16]}>
+    <div key="wrappa">
+      <Row key={"rowID"} justify="space-evenly" gutter={[16, 16]}>
+        <LayoutGroup key={"layoutgroup"}>
           <AnimatePresence key="animatepresenceinner">
             {DisplayThis}
           </AnimatePresence>
-        </Row>
-      </div>
-    </motion.div>
+        </LayoutGroup>
+      </Row>
+    </div>
   );
 }
 

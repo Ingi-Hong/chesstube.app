@@ -1,7 +1,7 @@
 import { Spin } from "antd";
 import { AnimatePresence } from "framer-motion";
-import React from "react";
-import useSWR from "swr";
+import React, { useMemo } from "react";
+import useSWRImmutable from "swr/immutable";
 import { useDebounce } from "use-debounce";
 import Videodisplay from "../components/Videodisplay";
 
@@ -50,11 +50,12 @@ export default function Home(props) {
     openings: openings,
   };
 
-  const { data, error, isLoading } = useSWR(
+  const { data, error, isLoading } = useSWRImmutable(
     ["/api/fetch_videos", filterObject],
-    ([url, filterObject]) => fetch_vid_data(url, filterObject)
+    ([url, filterObject]) => fetch_vid_data(url, filterObject),
   );
-
+  
+  console.log("data", data);
   if (error) {
     return (
       <div

@@ -211,7 +211,7 @@ function Sidebar(props) {
       <div style={{width: '100%', display: "flex", flexDirection: "column", justifyContent: 'center', alignContent: 'center' }}>
         {whatisthis.map((item) => (
           <Popover placement="right" key={item.key} content={item.content}>
-            <Typography.Link style={{color: 'black', padding: '0.5em'}} underline key={item.key}>{item.label}</Typography.Link>
+            <Typography.Link style={{color: 'black', padding: '0.5em'}} underline key={"link" + item.key}>{item.label}</Typography.Link>
           </Popover>
         ))}
       </div>

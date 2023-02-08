@@ -1,4 +1,4 @@
-import { Card, Tag, Col } from "antd";
+import { Card, Col, Tag } from "antd";
 import { motion } from "framer-motion";
 import styles from "../styles/Videocard.module.css";
 const { Meta } = Card;
@@ -10,15 +10,14 @@ function Videocard(props) {
   return (
     <Col key={"col" + card.title} xxl={6} xl={6} lg={6} md={8} sm={12} xs={24}>
       <motion.div
-        
-        exit={{ opacity: 0, y: '90%', zIndex: 100 }}
-        initial={{ opacity: 0, y: '-80%',}}
-        animate={{ y: 0, zIndex: 100}}
-        transition={{duration: 0.25}}
-        whileInView={{opacity: 1}}
-        whileHover={{scale: 1.03}}
-        key={"motion" + card.title}
-        style={{height: '100%', zIndex: 100}}
+        layout
+        layoutId={props.layoutId}
+        exit={{ opacity: 0, scale: 0, zIndex: 100 }}
+        initial={{ scale: 1, opacity: 0 }}
+        animate={{ scale: 1, zIndex: 100, opacity: 1 }}
+        transition={{ duration: 0.4 }}
+        key={"motion"}
+        style={{ height: "100%", zIndex: 100 }}
       >
         <Card
           key={"card" + card.title}
