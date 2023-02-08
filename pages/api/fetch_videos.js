@@ -23,6 +23,7 @@ export default async function fetch_videos(req, res) {
       const [retrievedVideos] = await Promise.all([
         db_manager.videos.findAll({
           raw: true,
+          order: [['elo', 'DESC']],
           include: [
             { model: db_manager.openings },
             { model: db_manager.creators, attributes: ["creator_name"] },

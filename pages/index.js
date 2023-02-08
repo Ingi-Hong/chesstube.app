@@ -1,4 +1,5 @@
 import { Spin } from "antd";
+import { AnimatePresence } from "framer-motion";
 import React from "react";
 import useSWR from "swr";
 import { useDebounce } from "use-debounce";
@@ -59,6 +60,7 @@ export default function Home(props) {
       <div
         style={{
           height: "100%",
+          width: "100%",
           justifyContent: "center",
           alignContent: "center",
         }}
@@ -68,18 +70,17 @@ export default function Home(props) {
     );
   }
 
-  if (isLoading){
-    return <Spin spinning={true} />
-  }
-
   return (
     <div style={{ overflow: "scroll" }} className="content-wrapper">
+      <Spin spinning={isLoading}>
+        <AnimatePresence>
           <Videodisplay
-            key="videodisplay"
-            isLoading={isLoading}
-            results={data.Videos}
+            key="videodisplayyy"
+            results={data}
             creatorMap={creatorMap}
           />
+        </AnimatePresence>
+      </Spin>
     </div>
   );
 }
