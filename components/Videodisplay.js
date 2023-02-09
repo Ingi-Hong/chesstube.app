@@ -1,4 +1,4 @@
-import { Card, Empty, Row, Typography } from "antd";
+import { Card, Empty, Row, Spin, Typography } from "antd";
 import {
   AnimatePresence,
   AnimateSharedLayout,
@@ -10,42 +10,33 @@ import Videocard from "./Videocard";
 const { Meta } = Card;
 
 function Videodisplay(props) {
-  var results = props.results;
-  var toDisplay;
-  if (results === undefined) {
-    toDisplay = [];
-  } else {
-    toDisplay = results.Videos;
+  const DisplayThis = props.DisplayThis;
 
-    if (toDisplay.length == 0) {
-      return (
-        <motion.div
-          key="nothingToDisplay"
-          initial={{ opacity: 0 }}
-          exit={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-        >
-          <Empty
-            image="/mac.jpg"
-            imageStyle={{
-              height: "70dvh",
-            }}
-            description={
-              <span>
-                <Typography.Title level={2}>
-                  Your search didn't return any results!
-                </Typography.Title>
-              </span>
-            }
-          />
-        </motion.div>
-      );
-    }
+  if (DisplayThis.length == 0) {
+    return (
+      <motion.div
+        key="nothingToDisplay"
+        initial={{ opacity: 0 }}
+        exit={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+      >
+        <Empty
+          image="/mac.jpg"
+          imageStyle={{
+            height: "70dvh",
+          }}
+          description={
+            <span>
+              <Typography.Title level={2}>
+                Your search didn't return any results!
+              </Typography.Title>
+            </span>
+          }
+        />
+      </motion.div>
+    );
   }
 
-  const DisplayThis = toDisplay.map((card, iteration) => (
-    <Videocard layoutId={card.title} key={"videocard" + iteration} card={card} />
-  ));
   return (
     <div key="wrappa">
       <Row key={"rowID"} justify="space-evenly" gutter={[16, 16]}>

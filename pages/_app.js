@@ -39,6 +39,31 @@ export default function MyApp({
     topbarText: "black",
   };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
   const [colorMode, setColorMode] = useState(lightMode);
 
   const [secondaryColor, setSecondaryColor] = useState(
