@@ -1,13 +1,8 @@
-import { Card, Empty, Row, Spin, Typography } from "antd";
+import { Card, Empty, Row, Typography } from "antd";
 import {
-  AnimatePresence,
-  AnimateSharedLayout,
-  LayoutGroup,
-  motion,
+  AnimatePresence, LayoutGroup,
+  motion
 } from "framer-motion";
-import Videocard from "./Videocard";
-
-const { Meta } = Card;
 
 function Videodisplay(props) {
   const DisplayThis = props.DisplayThis;

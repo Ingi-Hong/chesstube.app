@@ -4,7 +4,6 @@ export default async function fetch_start_data(req, res) {
   if (req.method !== "GET") {
     res.status(400).json({ error: "Must use GET request." });
   }
-
   try {
     const openings = await db_manager.openings.findAll({
       raw: true,

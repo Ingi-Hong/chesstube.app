@@ -1,10 +1,10 @@
 import { Spin } from "antd";
 import { AnimatePresence } from "framer-motion";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useSWRImmutable from "swr/immutable";
 import { useDebounce } from "use-debounce";
-import Videodisplay from "../components/Videodisplay";
 import Videocard from "../components/Videocard";
+import Videodisplay from "../components/Videodisplay";
 
 const fetch_vid_data = async (url, filterObject) => {
   const response = await fetch(url, {
@@ -14,11 +14,9 @@ const fetch_vid_data = async (url, filterObject) => {
       "Content-Type": "application/json",
     },
   });
-
   var responseBody = response.json();
   return responseBody;
 };
-
 
 export default function Home(props) {
   const creatorObjectList = props.creatorList;
@@ -27,11 +25,10 @@ export default function Home(props) {
     creatorList.push(item.creator_id);
   });
 
-  
   var elomin = props.elomin;
   var elomax = props.elomax;
   var plays_as = props.plays_as;
-  const openings = props.openingsList;
+  const openingsList = props.openingsList;
   const creatorMap = props.labelCreators;
   const min = useDebounce(elomin, 400);
   const max = useDebounce(elomax, 400);
@@ -50,25 +47,25 @@ export default function Home(props) {
     elomin: elomin,
     elomax: elomax,
     plays_as: plays_as,
-    openings: openings,
+    openings: openingsList,
   };
 
   const [test, setTest] = useState();
   const { data, error, isLoading, isValidating } = useSWRImmutable(
     ["/api/fetch_videos", filterObject],
     ([url, filterObject]) => fetch_vid_data(url, filterObject)
-    );
+  );
 
-    if (error) {
-      return (
-        <div
+  if (error) {
+    return (
+      <div
         style={{
           height: "100%",
           width: "100%",
           justifyContent: "center",
           alignContent: "center",
         }}
-        >
+      >
         {error.message}
       </div>
     );
@@ -76,14 +73,14 @@ export default function Home(props) {
 
   useEffect(() => {
     setTest((prevState) => {
-      if (prevState != data){
+      if (prevState != data) {
         return data;
       }
 
       return prevState;
-    })
+    });
   }, [data]);
-  
+
   if (test === undefined) {
     console.log("This should not be reached");
     return (
@@ -92,43 +89,36 @@ export default function Home(props) {
       </div>
     );
   }
-  
+
   if (isLoading) {
     return (
       <div
-      style={{
-        height: "100%",
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignContent: "center",
-      }}
+        style={{
+          height: "100%",
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignContent: "center",
+        }}
       >
         <Spin></Spin>
       </div>
     );
   }
-  
-  
+
   const DisplayThis = test.Videos.map((card, iteration) => (
     <Videocard
-    layoutId={card.title}
-    key={"videocard" + iteration}
-    card={card}
+      layoutId={card.title}
+      key={"videocard" + iteration}
+      card={card}
     />
   ));
 
-  
-  
   return (
     <div style={{ overflow: "scroll" }} className="content-wrapper">
       <Spin spinning={isValidating}>
         <AnimatePresence>
-          <Videodisplay
-            key="videodisplayyy"
-            creatorMap={creatorMap}
-            DisplayThis={DisplayThis}
-          />
+          <Videodisplay key="videodisplayyy" DisplayThis={DisplayThis} />
         </AnimatePresence>
       </Spin>
     </div>

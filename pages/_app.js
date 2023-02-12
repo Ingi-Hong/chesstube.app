@@ -24,7 +24,6 @@ export default function MyApp({
   const [plays_as, setPlays_as] = useState(["black", "white"]);
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(3000);
-  
   const darkMode = {
     topbarBg: "#333652",
     sidebarBg: "#90adc6",
@@ -39,30 +38,6 @@ export default function MyApp({
     topbarText: "black",
   };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
 
   const [colorMode, setColorMode] = useState(lightMode);
 
@@ -155,4 +130,16 @@ MyApp.getInitialProps = async (context) => {
       poop: "poop",
     };
   }
+};
+
+const fetch_vid_data = async (url, filterObject) => {
+  const response = await fetch(url, {
+    method: "POST",
+    body: JSON.stringify(filterObject),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  var responseBody = response.json();
+  return responseBody;
 };
