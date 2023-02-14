@@ -23,6 +23,12 @@ class Database {
       process.env.DATABASE_URL,
       {
         dialectModule: require("../node_modules/pg/lib/index"),
+        ssl: true,
+        dialectOptions:{
+          ssl: {
+            rejectUnauthorized: false,
+          }
+        },
         dialect: "postgres",
         sync: true,
         define: {
