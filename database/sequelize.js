@@ -24,9 +24,10 @@ class Database {
       {
         dialectModule: require("../node_modules/pg/lib/index"),
         dialect: "postgres",
+        sync: true,
         define: {
           freezeTableName: true,
-          
+        
         },
       }
     );
