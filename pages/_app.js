@@ -14,7 +14,6 @@ export default function MyApp({
   labelCreators,
 }) {
   var allOpenings = [];
-  
   openingTreeAndList.openingList.forEach((item) => 
   allOpenings.push(parseInt(item.opening_id))
   );

@@ -11,6 +11,7 @@ console.log(`postgresql://test:${password}@${host}:${port}/${database}`);
 console.log();
 console.log();
 
+
 class Database {
   sqlz;
   creators;
@@ -19,7 +20,7 @@ class Database {
 
   constructor() {
     this.sqlz = new Sequelize(
-      `postgresql://test:${password}@${host}:${port}/${database}`,
+      process.env.DATABASE_URL,
       {
         dialectModule: require("../node_modules/pg/lib/index"),
         dialect: "postgres",
