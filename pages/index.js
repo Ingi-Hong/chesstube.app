@@ -56,6 +56,8 @@ export default function Home(props) {
     ([url, filterObject]) => fetch_vid_data(url, filterObject)
   );
 
+  const [prevData, setPrevData] = useState();
+
   if (error) {
     return (
       <div
@@ -74,20 +76,46 @@ export default function Home(props) {
   useEffect(() => {
     setTest((prevState) => {
       if (prevState != data) {
+        setPrevData(prevState);
         return data;
       }
+
 
       return prevState;
     });
   }, [data]);
 
   if (test === undefined) {
-    console.log("This should not be reached");
-    return (
-      <div>
-        <h1>GDFJDSF</h1>UHHHHHHHHHHHHHHH
-      </div>
-    );
+    if (prevData === undefined){
+      console.log("This should not be reached");
+      return (
+        <div>
+          <h1>GDFJDSF</h1>UHHHHHHHHHHHHHHH
+        </div>
+      );
+
+    }else{
+
+      const DisplayThis = prevData.Videos.map((card, iteration) => (
+        <Videocard
+          layoutId={card.title}
+          key={"videocard" + iteration}
+          card={card}
+        />
+      ));
+
+      return (
+        <div style={{ overflow: "scroll" }} className="content-wrapper">
+          <Spin spinning={true}>
+            <AnimatePresence>
+              <Videodisplay key="videodisplayyy" DisplayThis={DisplayThis} />
+            </AnimatePresence>
+          </Spin>
+        </div>
+      );
+
+
+    }
   }
 
   if (isLoading) {
