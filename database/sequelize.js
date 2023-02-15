@@ -1,16 +1,5 @@
 // import { Sequelize, DataTypes } from "sequelize";
 import {Sequelize, DataTypes} from 'sequelize';
-const username = process.env.USERNAME;
-const password = process.env.PASSWORD;
-const host = process.env.HOST;
-const port = process.env.PORT;
-const database = process.env.DATABASE;
-console.log();
-console.log();
-console.log(`postgresql://test:${password}@${host}:${port}/${database}`);
-console.log();
-console.log();
-
 
 class Database {
   sqlz;
