@@ -1,6 +1,17 @@
 import { Card, Col, Tag } from "antd";
 import { motion } from "framer-motion";
 import styles from "../styles/Videocard.module.css";
+import {Montserrat, Roboto_Condensed} from '@next/font/google'
+const font = Montserrat({
+  weight: '400',
+  subsets: ['latin']
+})
+
+const condensedFont = Roboto_Condensed({
+  weight: '400',
+  subsets: ['latin']
+})
+
 const { Meta } = Card;
 function Videocard(props) {
   var card = props.card;
@@ -20,11 +31,12 @@ function Videocard(props) {
         style={{ height: "100%", zIndex: 100 }}
       >
         <Card
+        style={{fontFamily: font.style.fontFamily}}
           key={"card" + card.title}
           hoverable={true}
           className={styles.card}
           cover={
-            <img
+            <img 
               className={styles.thumbnail}
               alt="example"
               src={card.thumbnail}
@@ -33,16 +45,16 @@ function Videocard(props) {
           }
           onClick={() => handleClick(card.video_link)}
         >
-          <Meta key={"meta" + card.title} title={card.title} />
+          <Meta style={{fontFamily: font.style.fontFamily}} key={"meta" + card.title} title={card.title}  />
           <div key={"by" + card.title}>by {card["Creator.creator_name"]}</div>
           <div
             key={"somestylething" + card.title}
             style={{ height: "1em" }}
           ></div>
-          <div key={"space" + card.title} className={styles.space}>
+          <div  key={"space" + card.title} className={styles.space}>
             <Tag
               className={styles.tag}
-              style={{ color: "black" }}
+              style={{ color: "black", fontFamily: font.style.fontFamily }}
               color="#efe7bc"
               key={"rating" + card.title}
             >
@@ -51,7 +63,7 @@ function Videocard(props) {
             <Tag
               key={"opening" + card.title}
               className={styles.tag}
-              style={{ color: "black" }}
+              style={{ color: "black", fontFamily: font.style.fontFamily }}
               color="#ffa384"
             >
               {card["Opening.opening"]}
@@ -59,7 +71,7 @@ function Videocard(props) {
             <Tag
               key={"color" + card.title}
               className={styles.tag}
-              style={{ color: "black" }}
+              style={{ color: "black", fontFamily: font.style.fontFamily }}
               color="#90adc6"
             >
               {card.plays_as == "white" ? "Plays as white" : "Plays as black"}
