@@ -1,9 +1,14 @@
-import { ConfigProvider, Layout } from "antd";
+import { ConfigProvider, Layout, theme } from "antd";
 import App from "next/app";
 import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import "../styles/globals.css";
+import {Roboto} from '@next/font/google'
+const font = Roboto({
+  weight: '300',
+  subsets: ['latin']
+})
 // import {get_openings, get_creators} from "../database/static-props"
 const { Header, Sider, Content } = Layout;
 
@@ -23,11 +28,12 @@ export default function MyApp({
   const [plays_as, setPlays_as] = useState(["black", "white"]);
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(3000);
+
   const darkMode = {
-    topbarBg: "#333652",
-    sidebarBg: "#90adc6",
-    secondaryColor: "#90adc6",
-    topbarText: "white",
+    topbarBg: "#4d8d7a",
+    sidebarBg: "#4d8d7a",
+    secondaryColor: "#4d8d7a",
+    topbarText: "black",
   };
 
   const lightMode = {
@@ -38,7 +44,7 @@ export default function MyApp({
   };
 
 
-  const [colorMode, setColorMode] = useState(lightMode);
+  const [colorMode, setColorMode] = useState(darkMode);
 
   const [secondaryColor, setSecondaryColor] = useState(
     colorMode.secondaryColor
@@ -51,16 +57,20 @@ export default function MyApp({
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: topbarBg,
+          colorPrimary: colorMode.topbarBg
         },
       }}
       style={{ margin: "0", padding: "0" }}
     >
       <Layout style={{ height: "100dvh", padding: "0", margin: "0" }}>
         <Header
-          style={{ color: topbarText, margin: "0", backgroundColor: topbarBg }}
+        className={font.className}
+          style={{background: colorMode.topbarBg, margin: "0" }}
         >
-          <Topbar />
+          <Topbar 
+          fontColor={topbarText}
+          font={font}
+          />
         </Header>
         <Layout>
           <Sider >
@@ -69,7 +79,6 @@ export default function MyApp({
               creators={creators}
               setOpenings={setOpenings}
               openings={allOpenings}
-              color={sidebarBg}
               min={min}
               max={max}
               setMin={setMin}
@@ -81,7 +90,7 @@ export default function MyApp({
             />
           </Sider>
           <Content>
-            <Component
+            <Component  
               {...pageProps}
               creatorList={creators}
               elomin={min}

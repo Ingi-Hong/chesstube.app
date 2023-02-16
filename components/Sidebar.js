@@ -17,6 +17,13 @@ import {
   ColorCheckbox, CreatorCheckbox,
   OpeningCheckbox
 } from "./StatefulCheckbox";
+import {  Source_Sans_Pro } from "@next/font/google";
+
+
+const font = Source_Sans_Pro({
+  weight: '600',
+  subsets: ['latin']
+})
 
 const { Panel } = Collapse;
 
@@ -117,8 +124,9 @@ function Sidebar(props) {
   const { token } = theme.useToken();
 
   const panelStyle = {
+    width: '100%',
     border: "none",
-    background: token.colorBgContainer,
+    background: token.colorBgBase,
   };
 
   return (
@@ -126,7 +134,7 @@ function Sidebar(props) {
       style={{
         flexDirection: "column",
         display: "flex",
-        background: color,
+        background: token.colorBgBase,
         height: "100%",
         alignContent: "space-between",
       }}
@@ -137,14 +145,16 @@ function Sidebar(props) {
         )}
         bordered={false}
         expandIconPosition="end"
-      >
+        >
         <Panel
           style={panelStyle}
+          
           header={
-            <Space>
+            <Space style={{fontFamily: font.style.fontFamily}}>
               <UserOutlined /> Creators
             </Space>
           }
+          
           key="creator"
         >
           {parseCreatorList(creator_list, setCreators, creators)}
@@ -153,7 +163,7 @@ function Sidebar(props) {
         <Panel
           style={panelStyle}
           header={
-            <Space>
+            <Space style={{fontFamily: font.style.fontFamily}}>
               <FundOutlined /> Elo Range
             </Space>
           }
@@ -171,7 +181,7 @@ function Sidebar(props) {
           style={panelStyle}
           key="color"
           header={
-            <Space>
+            <Space style={{fontFamily: font.style.fontFamily}}>
               <PlayCircleOutlined />
               Plays as...
             </Space>
@@ -199,7 +209,7 @@ function Sidebar(props) {
           style={panelStyle}
           key="Openings"
           header={
-            <Space>
+            <Space style={{fontFamily: font.style.fontFamily}}>
               <ShareAltOutlined /> Openings
             </Space>
           }
@@ -211,7 +221,7 @@ function Sidebar(props) {
       <div style={{width: '100%', display: "flex", flexDirection: "column", justifyContent: 'center', alignContent: 'center' }}>
         {whatisthis.map((item) => (
           <Popover placement="right" key={item.key} content={item.content}>
-            <Typography.Link style={{color: 'black', padding: '0.5em'}} underline key={"link" + item.key}>{item.label}</Typography.Link>
+            <Typography.Link style={{color: 'black', padding: '0.5em', fontFamily: font.style.fontFamily}} underline key={"link" + item.key}>{item.label}</Typography.Link>
           </Popover>
         ))}
       </div>
