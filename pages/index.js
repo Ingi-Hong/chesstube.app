@@ -89,15 +89,7 @@ export default function Home(props) {
   if (test === undefined) {
     if (prevData === undefined) {
       return (
-        <div
-          style={{
-            overflow: "scroll",
-            width: "100%",
-            height: "100%",
-            background: token.colorBgContainer,
-          }}
-          className="content-wrapper"
-        >
+        <div style={{ overflow: "scroll", width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignContent: 'center' }} className="content-wrapper">
           <Spin></Spin>
         </div>
       );
@@ -121,17 +113,9 @@ export default function Home(props) {
   if (isLoading) {
     if (prevData === undefined) {
       return (
-        <div
-          style={{
-            overflow: "scroll",
-            width: "100%",
-            height: "100%",
-            background: token.colorBgContainer,
-          }}
-          className="content-wrapper"
-        >
-          <Spin></Spin>
-        </div>
+        <div style={{ overflow: "scroll", width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignContent: 'center' }} className="content-wrapper">
+        <Spin></Spin>
+      </div>
       );
     }
 
