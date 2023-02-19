@@ -9,7 +9,7 @@ function Topbar(props) {
 
     <Row justify="space-between">
       <Col span={12}>
-        <div style={{fontSize: '2em', fontFamily: font.style.fontFamily}}>chesstube.app</div>
+        <div style={{fontSize: '2em', fontFamily: font.style.fontFamily}}>chesstube.app<sub style={{fontSize: '0.5em'}}>alpha</sub></div> 
       </Col>
       <Col>
       <Popover placement="right" content="Maybe a future feature...">
