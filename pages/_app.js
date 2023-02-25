@@ -89,8 +89,11 @@ export default function MyApp({
               colors={plays_as}
             />
           </Sider>
-          <Content>
-            <Component  
+          <Content
+          style={{background: "white", overflow: 'scroll'}}
+          >
+            <Component
+              
               {...pageProps}
               creatorList={creators}
               elomin={min}

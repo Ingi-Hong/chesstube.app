@@ -19,7 +19,7 @@ function Videocard(props) {
     window.open(url, "_blank").focus();
   };
   return (
-    <Col key={"col" + card.title} xxl={6} xl={6} lg={6} md={8} sm={12} xs={24}>
+    <Col key={"col" + card.title} xxl={6} xl={6} lg={6} md={12} sm={12} xs={24}>
       <motion.div
         layout
         layoutId={props.layoutId}
