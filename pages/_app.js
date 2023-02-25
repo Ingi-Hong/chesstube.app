@@ -90,7 +90,7 @@ export default function MyApp({
             />
           </Sider>
           <Content
-          style={{background: "white", overflow: 'scroll'}}
+          style={{background: "white"}}
           >
             <Component
               

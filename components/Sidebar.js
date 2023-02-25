@@ -3,27 +3,30 @@ import {
   PlayCircleOutlined,
   ShareAltOutlined,
   UpOutlined,
-  UserOutlined
+  UserOutlined,
 } from "@ant-design/icons";
 import {
   Col,
   Collapse,
-  InputNumber, Popover, Row,
+  InputNumber,
+  Popover,
+  Row,
   Space,
   theme,
-  Typography
+  Typography,
+  Affix,
 } from "antd";
 import {
-  ColorCheckbox, CreatorCheckbox,
-  OpeningCheckbox
+  ColorCheckbox,
+  CreatorCheckbox,
+  OpeningCheckbox,
 } from "./StatefulCheckbox";
-import {  Source_Sans_Pro } from "@next/font/google";
-
+import { Source_Sans_Pro } from "@next/font/google";
 
 const font = Source_Sans_Pro({
-  weight: '600',
-  subsets: ['latin']
-})
+  weight: "600",
+  subsets: ["latin"],
+});
 
 const { Panel } = Collapse;
 
@@ -95,8 +98,7 @@ function SliderComponent(props) {
   );
 }
 
-const content = <div>Coming soon...</div>
-
+const content = <div>Coming soon...</div>;
 
 const whatisthis = [
   { label: "Contribute", key: "contribute", content: content },
@@ -124,7 +126,7 @@ function Sidebar(props) {
   const { token } = theme.useToken();
 
   const panelStyle = {
-    width: '100%',
+    width: "100%",
     border: "none",
     background: token.colorBgBase,
   };
@@ -137,94 +139,115 @@ function Sidebar(props) {
         background: token.colorBgBase,
         height: "100%",
         alignContent: "space-between",
+        position: 'sticky'
       }}
     >
-      <Collapse
-        expandIcon={({ isActive }) => (
-          <UpOutlined rotate={isActive ? 180 : 0} />
-        )}
-        bordered={false}
-        expandIconPosition="end"
+      <Affix>
+        <Collapse
+          expandIcon={({ isActive }) => (
+            <UpOutlined rotate={isActive ? 180 : 0} />
+          )}
+          bordered={false}
+          expandIconPosition="end"
         >
-        <Panel
-          style={panelStyle}
-          
-          header={
-            <Space style={{fontFamily: font.style.fontFamily}}>
-              <UserOutlined /> Creators
-            </Space>
-          }
-          
-          key="creator"
-        >
-          {parseCreatorList(creator_list, setCreators, creators)}
-        </Panel>
+          <Panel
+            style={panelStyle}
+            header={
+              <Space style={{ fontFamily: font.style.fontFamily }}>
+                <UserOutlined /> Creators
+              </Space>
+            }
+            key="creator"
+          >
+            {parseCreatorList(creator_list, setCreators, creators)}
+          </Panel>
 
-        <Panel
-          style={panelStyle}
-          header={
-            <Space style={{fontFamily: font.style.fontFamily}}>
-              <FundOutlined /> Elo Range
-            </Space>
-          }
-          key="elo"
-        >
-          <SliderComponent
-            setMin={setMin}
-            setMax={setMax}
-            max={max}
-            min={min}
-          />
-        </Panel>
-
-        <Panel
-          style={panelStyle}
-          key="color"
-          header={
-            <Space style={{fontFamily: font.style.fontFamily}}>
-              <PlayCircleOutlined />
-              Plays as...
-            </Space>
-          }
-        >
-          <Row>
-            {" "}
-            <ColorCheckbox
-              colors={colors}
-              color={"white"}
-              setColors={setColors}
+          <Panel
+            style={panelStyle}
+            header={
+              <Space style={{ fontFamily: font.style.fontFamily }}>
+                <FundOutlined /> Elo Range
+              </Space>
+            }
+            key="elo"
+          >
+            <SliderComponent
+              setMin={setMin}
+              setMax={setMax}
+              max={max}
+              min={min}
             />
-          </Row>
-          <Row>
-            {" "}
-            <ColorCheckbox
-              colors={colors}
-              color={"black"}
-              setColors={setColors}
-            />
-          </Row>
-        </Panel>
+          </Panel>
 
-        <Panel
-          style={panelStyle}
-          key="Openings"
-          header={
-            <Space style={{fontFamily: font.style.fontFamily}}>
-              <ShareAltOutlined /> Openings
-            </Space>
-          }
+          <Panel
+            style={panelStyle}
+            key="color"
+            header={
+              <Space style={{ fontFamily: font.style.fontFamily }}>
+                <PlayCircleOutlined />
+                Plays as...
+              </Space>
+            }
+          >
+            <Row>
+              {" "}
+              <ColorCheckbox
+                colors={colors}
+                color={"white"}
+                setColors={setColors}
+              />
+            </Row>
+            <Row>
+              {" "}
+              <ColorCheckbox
+                colors={colors}
+                color={"black"}
+                setColors={setColors}
+              />
+            </Row>
+          </Panel>
+
+          <Panel
+            style={panelStyle}
+            key="Openings"
+            header={
+              <Space style={{ fontFamily: font.style.fontFamily }}>
+                <ShareAltOutlined /> Openings
+              </Space>
+            }
+          >
+            {parseOpeningTree(openingTree, setOpenings, openings)}
+          </Panel>
+        </Collapse>
+      </Affix>
+      <div style={{ height: "100%" }} />
+      <Affix style={{position: 'fixed', bottom: 0}}>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignContent: "center",
+          }}
         >
-          {parseOpeningTree(openingTree, setOpenings, openings)}
-        </Panel>
-      </Collapse>
-      <div style={{height: '100%'}} />
-      <div style={{width: '100%', display: "flex", flexDirection: "column", justifyContent: 'center', alignContent: 'center' }}>
-        {whatisthis.map((item) => (
-          <Popover placement="right" key={item.key} content={item.content}>
-            <Typography.Link style={{color: 'black', padding: '0.5em', fontFamily: font.style.fontFamily}} underline key={"link" + item.key}>{item.label}</Typography.Link>
-          </Popover>
-        ))}
-      </div>
+          {whatisthis.map((item) => (
+            <Popover placement="right" key={item.key} content={item.content}>
+              <Typography.Link
+                style={{
+                  color: "black",
+                  padding: "0.5em",
+                  fontFamily: font.style.fontFamily,
+                }}
+                underline
+                key={"link" + item.key}
+              >
+                {item.label}
+              </Typography.Link>
+            </Popover>
+          ))}
+        </div>
+      </Affix>
     </div>
   );
 }
