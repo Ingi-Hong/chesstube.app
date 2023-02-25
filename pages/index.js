@@ -64,8 +64,8 @@ export default function Home(props) {
     return (
       <div
         style={{
-          height: "100%",
-          width: "100%",
+          height: "100dvh",
+          width: "100dvw",
           justifyContent: "center",
           alignContent: "center",
         }}
@@ -90,15 +90,9 @@ export default function Home(props) {
     if (prevData === undefined) {
       return (
         <div
-          style={{
-            overflow: "scroll",
-            width: "100%",
-            height: "100%",
-            background: token.colorBgContainer,
-          }}
           className="content-wrapper"
         >
-          <Spin></Spin>
+          <Spin />
         </div>
       );
     } else {
@@ -111,7 +105,7 @@ export default function Home(props) {
       ));
 
       return (
-        <div style={{ overflow: "scroll", width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignContent: 'center' }} className="content-wrapper">
+        <div style={{ background: token.colorBgContainer }} className="content-wrapper">
           <Spin></Spin>
         </div>
       );
@@ -123,9 +117,6 @@ export default function Home(props) {
       return (
         <div
           style={{
-            overflow: "scroll",
-            width: "100%",
-            height: "100%",
             background: token.colorBgContainer,
           }}
           className="content-wrapper"
@@ -146,9 +137,6 @@ export default function Home(props) {
     return (
       <div
         style={{
-          overflow: "scroll",
-          width: "100%",
-          height: "100%",
           background: token.colorBgContainer,
         }}
         className="content-wrapper"
@@ -173,12 +161,11 @@ export default function Home(props) {
   return (
     <div
       style={{
-        overflow: "scroll",
         width: "100%",
         height: "100%",
         background: token.colorBgContainer,
+        padding: '3em',
       }}
-      className="content-wrapper"
     >
       <Spin spinning={isValidating}>
         <AnimatePresence>
