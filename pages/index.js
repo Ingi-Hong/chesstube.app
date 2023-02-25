@@ -89,9 +89,7 @@ export default function Home(props) {
   if (test === undefined) {
     if (prevData === undefined) {
       return (
-        <div
-          className="content-wrapper"
-        >
+        <div className="content-wrapper">
           <Spin />
         </div>
       );
@@ -105,8 +103,19 @@ export default function Home(props) {
       ));
 
       return (
-        <div style={{ background: token.colorBgContainer }} className="content-wrapper">
-          <Spin></Spin>
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            background: token.colorBgContainer,
+            padding: "3em",
+          }}
+        >
+          <Spin spinning={isValidating}>
+            <AnimatePresence>
+              <Videodisplay key="videodisplayyy" DisplayThis={DisplayThis} />
+            </AnimatePresence>
+          </Spin>
         </div>
       );
     }
@@ -141,7 +150,7 @@ export default function Home(props) {
         }}
         className="content-wrapper"
       >
-        <Spin style={{ margin: 'auto' }} spinning={isValidating}>
+        <Spin style={{ margin: "auto" }} spinning={isValidating}>
           <AnimatePresence>
             <Videodisplay key="videodisplayyy" DisplayThis={DisplayThis} />
           </AnimatePresence>
@@ -164,7 +173,7 @@ export default function Home(props) {
         width: "100%",
         height: "100%",
         background: token.colorBgContainer,
-        padding: '3em',
+        padding: "3em",
       }}
     >
       <Spin spinning={isValidating}>
