@@ -17,7 +17,17 @@ body {
 
 .ant-select-selection-overflow{
   white-space: nowrap;
+}
+
+
+.ant-select-selector{
+  white-space: nowrap;
+  max-height: 80px;
   overflow-x: scroll;
-  overflow-y: auto;
-  max-height: 90px;
+  display: flex;
+  flex-direction: row;
+}
+
+.ant-tree-select{
+  width: 100%;
 }

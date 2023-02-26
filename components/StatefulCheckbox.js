@@ -1,11 +1,11 @@
-import { Checkbox, TreeSelect, Tag, theme } from "antd";
+import { Checkbox, TreeSelect, Tag, theme, Button } from "antd";
 import { useState } from "react";
 import { Roboto } from "@next/font/google";
 
 const condensedFont = Roboto({
-  weight: '400',
-  subsets: ['latin']
-})
+  weight: "400",
+  subsets: ["latin"],
+});
 
 export function CreatorCheckbox(props) {
   const stateList = props.stateList;
@@ -54,6 +54,10 @@ export function OpeningCheckbox({ openingTree, setOpenings }) {
     });
   }
 
+  function deselectAll() {
+    setOpenings([]);
+  }
+
   function handleChange(e) {
     var idList = [];
     e.forEach((item) => idList.push(parseInt(item)));
@@ -73,36 +77,40 @@ export function OpeningCheckbox({ openingTree, setOpenings }) {
       defaultValue={treeData}
       treeNodeFilterProp="title"
       size={"small"}
-      tagRender={(props) => <Tag style={{fontFamily: condensedFont.style.fontFamily}} color={token.colorPrimary}>{props.label}</Tag>}
+      tagRender={(props) => (
+        <Tag
+          style={{ fontFamily: condensedFont.style.fontFamily }}
+          color={token.colorPrimary}
+        >
+          {props.label}
+        </Tag>
+      )}
+      allowClear={true}
     />
   );
 }
 
-export function ColorCheckbox({color, setColors, colors}){
-
+export function ColorCheckbox({ color, setColors, colors }) {
   const [checked, setChecked] = useState(true);
-  console.log('colors', colors)
+  console.log("colors", colors);
 
-  function addTick(){
+  function addTick() {
     setColors([...colors, color]);
     setChecked(true);
   }
 
-  function removeTick(){
-    setColors(
-      colors.filter((listItem) => listItem !== color)
-    )
+  function removeTick() {
+    setColors(colors.filter((listItem) => listItem !== color));
     setChecked(false);
   }
 
-  return(
+  return (
     <Checkbox
-    checked={checked}
-    defaultChecked={true}
-    onChange={checked ? removeTick : addTick}
+      checked={checked}
+      defaultChecked={true}
+      onChange={checked ? removeTick : addTick}
     >
-      {color === 'white' ? "White" : "Black"}
+      {color === "white" ? "White" : "Black"}
     </Checkbox>
-  )
-
+  );
 }
