@@ -1,16 +1,23 @@
 html,
 body {
-min-height: 100dvh;
-margin: 0;
-padding: 0;
-} 
+  min-height: 100dvh;
+  margin: 0;
+  padding: 0;
+}
 
-.content-wrapper{
-    padding: 1em;
-    padding-top: 2em;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    width: 100%;
-    min-height: 100%;
+.content-wrapper {
+  padding: 1em;
+  padding-top: 2em;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+  min-height: 100%;
+}
+
+.ant-select-selection-overflow{
+  white-space: nowrap;
+  overflow-x: scroll;
+  overflow-y: auto;
+  max-height: 90px;
 }

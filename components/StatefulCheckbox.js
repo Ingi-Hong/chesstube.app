@@ -1,5 +1,11 @@
-import { Checkbox, TreeSelect } from "antd";
+import { Checkbox, TreeSelect, Tag, theme } from "antd";
 import { useState } from "react";
+import { Roboto } from "@next/font/google";
+
+const condensedFont = Roboto({
+  weight: '400',
+  subsets: ['latin']
+})
 
 export function CreatorCheckbox(props) {
   const stateList = props.stateList;
@@ -33,7 +39,9 @@ export function CreatorCheckbox(props) {
 
 export function OpeningCheckbox({ openingTree, setOpenings }) {
   var treeData = [];
-  console.log(openingTree)
+
+  const { token } = theme.useToken();
+
   for (const key in openingTree) {
     var children = [];
     openingTree[key].children.forEach((element) => {
@@ -58,11 +66,14 @@ export function OpeningCheckbox({ openingTree, setOpenings }) {
       placeholder="Select openings"
       onChange={(e) => handleChange(e)}
       treeCheckable={true}
-      style={{ width: "100%" }}
+      style={{ width: "100%", overflow: 'auto', whiteSpace: 'nowrap' }}
       multiple={true}
       treeselect={TreeSelect.SHOW_PARENT}
-      showSearch={false}
+      showSearch={true}
       defaultValue={treeData}
+      treeNodeFilterProp="title"
+      size={"small"}
+      tagRender={(props) => <Tag style={{fontFamily: condensedFont.style.fontFamily}} color={token.colorPrimary}>{props.label}</Tag>}
     />
   );
 }

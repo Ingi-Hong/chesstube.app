@@ -30,7 +30,8 @@ export default function Home(props) {
   var elomin = props.elomin;
   var elomax = props.elomax;
   var plays_as = props.plays_as;
-  const openingsList = props.openingsList;
+  var openingsList = props.openingsList;
+  var debouncedOpeningsList = useDebounce(openingsList, 400);
   const creatorMap = props.labelCreators;
   const min = useDebounce(elomin, 400);
   const max = useDebounce(elomax, 400);
@@ -44,6 +45,11 @@ export default function Home(props) {
   if (max) {
     elomax = max[0];
   }
+
+  if (debouncedOpeningsList) {
+    openingsList = debouncedOpeningsList[0];
+  }
+
   const filterObject = {
     creators: creatorList,
     elomin: elomin,
@@ -86,8 +92,8 @@ export default function Home(props) {
     });
   }, [data]);
 
-  if (test === undefined) {
-    if (prevData === undefined) {
+  if (test === undefined || test.Videos === undefined) {
+    if (prevData === undefined || prevData.Videos === undefined) {
       return (
         <div className="content-wrapper">
           <Spin />

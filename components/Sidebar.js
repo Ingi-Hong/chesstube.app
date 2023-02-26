@@ -139,7 +139,6 @@ function Sidebar(props) {
         background: token.colorBgBase,
         height: "100%",
         alignContent: "space-between",
-        position: 'sticky'
       }}
     >
       <Affix>
@@ -221,7 +220,7 @@ function Sidebar(props) {
         </Collapse>
       </Affix>
       <div style={{ height: "100%" }} />
-      <Affix style={{position: 'fixed', bottom: 0}}>
+      <Affix style={{ position: "fixed", bottom: 0 }}>
         <div
           style={{
             width: "100%",

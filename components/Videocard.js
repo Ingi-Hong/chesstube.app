@@ -1,13 +1,8 @@
 import { Card, Col, Tag } from "antd";
 import { motion } from "framer-motion";
 import styles from "../styles/Videocard.module.css";
-import {Montserrat, Roboto_Condensed} from '@next/font/google'
+import {Montserrat} from '@next/font/google'
 const font = Montserrat({
-  weight: '400',
-  subsets: ['latin']
-})
-
-const condensedFont = Roboto_Condensed({
   weight: '400',
   subsets: ['latin']
 })

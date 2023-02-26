@@ -93,7 +93,6 @@ export default function MyApp({
           style={{background: "white"}}
           >
             <Component
-              
               {...pageProps}
               creatorList={creators}
               elomin={min}
