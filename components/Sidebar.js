@@ -60,7 +60,6 @@ function SliderComponent(props) {
   var max = props.max;
 
   const minChange = (value) => {
-    console.log("value", value);
     setMin(value);
   };
 
@@ -75,7 +74,7 @@ function SliderComponent(props) {
         <Col span={12}>
           <InputNumber
             min={0}
-            max={3000}
+            max={max}
             value={min}
             onChange={minChange}
             bordered={true}
@@ -85,7 +84,7 @@ function SliderComponent(props) {
         <Col span={12}>Max: </Col>
         <Col span={12}>
           <InputNumber
-            min={0}
+            min={min}
             max={3000}
             value={max}
             onChange={maxChange}
