@@ -78,7 +78,8 @@ export function OpeningCheckbox({ openingTree, setOpenings }) {
       treeNodeFilterProp="title"
       size={"small"}
       tagRender={(props) => (
-        <Tag
+        <Tag 
+        
           style={{ fontFamily: condensedFont.style.fontFamily }}
           color={token.colorPrimary}
         >
