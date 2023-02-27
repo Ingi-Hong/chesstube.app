@@ -72,7 +72,7 @@ export function OpeningCheckbox({ openingTree, setOpenings }) {
       treeCheckable={true}
       style={{ width: "100%" }}
       multiple={true}
-      showCheckedStrategy={TreeSelect.SHOW_PARENT}
+      showCheckedStrategy={TreeSelect.SHOW_ALL}
       showSearch={true}
       defaultValue={treeData}
       treeNodeFilterProp="title"
