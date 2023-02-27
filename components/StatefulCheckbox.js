@@ -77,6 +77,11 @@ export function OpeningCheckbox({ openingTree, setOpenings }) {
       defaultValue={treeData}
       treeNodeFilterProp="title"
       size={"small"}
+      dropdownStyle={{
+        position: 'fixed',
+        width: '200%',
+        x: '30px'
+      }}
       tagRender={(props) => (
         <Tag 
         
