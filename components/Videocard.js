@@ -20,6 +20,7 @@ function Videocard(props) {
         layoutId={props.layoutId}
         exit={{ opacity: 0, scale: 0, zIndex: 100 }}
         initial={{ scale: 1, opacity: 0 }}
+        whileHover={{scale: 1.01}}
         animate={{ scale: 1, zIndex: 100, opacity: 1 }}
         transition={{ duration: 0.4 }}
         key={"motion"}
@@ -32,6 +33,7 @@ function Videocard(props) {
           className={styles.card}
           cover={
             <img 
+            loading="lazy"
               className={styles.thumbnail}
               alt="example"
               src={card.thumbnail}
