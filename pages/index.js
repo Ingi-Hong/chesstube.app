@@ -33,8 +33,8 @@ export default function Home(props) {
   var openingsList = props.openingsList;
   var debouncedOpeningsList = useDebounce(openingsList, 400);
   const creatorMap = props.labelCreators;
-  const min = useDebounce(elomin, 400);
-  const max = useDebounce(elomax, 400);
+  const min = useDebounce(elomin, 800);
+  const max = useDebounce(elomax, 800);
   const filteredColors = useDebounce(plays_as, 400);
   if (filteredColors) {
     plays_as = filteredColors[0];
