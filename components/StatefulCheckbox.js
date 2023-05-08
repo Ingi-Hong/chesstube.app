@@ -70,7 +70,7 @@ export function OpeningCheckbox({ openingTree, setOpenings }) {
       placeholder="Select openings"
       onChange={(e) => handleChange(e)}
       treeCheckable={true}
-      style={{ width: "100%" }}
+      style={{ width: "100%", height: '300px' }}
       multiple={true}
       showCheckedStrategy={TreeSelect.SHOW_ALL}
       showSearch={true}
@@ -79,8 +79,6 @@ export function OpeningCheckbox({ openingTree, setOpenings }) {
       size={"small"}
       dropdownStyle={{
         position: 'fixed',
-        width: '200%',
-        x: '30px'
       }}
       tagRender={(props) => (
         <Tag 

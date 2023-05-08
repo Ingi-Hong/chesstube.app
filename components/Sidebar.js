@@ -147,6 +147,9 @@ function Sidebar(props) {
           )}
           bordered={false}
           expandIconPosition="end"
+          style={{
+            overflow: 'scroll'
+          }}
         >
           <Panel
             style={panelStyle}
